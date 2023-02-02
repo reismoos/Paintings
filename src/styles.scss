@@ -1,0 +1,40 @@
+body {
+    background: rgb(201, 48, 48);
+}
+
+// Game menu
+
+// header 
+
+@mixin wrapper {
+    width: 320px;
+    margin: 0 auto;
+}
+
+header {
+    @include wrapper();
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+// end header
+
+// main
+
+main {
+    @include wrapper();
+    margin-top: 20px;
+    background-color: rgb(110, 231, 79);
+    padding: 10px;
+}
+
+.painting-img {
+    height: 100px;
+    width: 60px;
+}
+
+.painter-about-img {
+    height: 100px;
+    width: 60px;
+}
