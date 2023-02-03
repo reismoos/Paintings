@@ -6,7 +6,7 @@ module.exports = {
         app:"./src/js/main.js"
     },
     output: {
-        clean: true,
+        clean: false,
         filename: "[name].bundle.js",
         path: path.resolve(__dirname, "dist")
     },
