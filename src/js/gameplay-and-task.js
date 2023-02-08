@@ -46,9 +46,25 @@ const fillAnswers = (place, className, arr, p) => {
 }
 let tasks = getRandomArr(paintings.length, 10);
 let curQuestion = 0;
-let rightAnswer = false;
+let rightAnswers = {
+    painting: false,
+    painter: false,
+};
+let curScore = {
+    painting: 5,
+    painter: 5,
+    all: 0,
+}
+
 const a = () => {
-    console.log(tasks, paintings[tasks[curQuestion]])
+    console.log('tasks =', tasks, 'painting =',paintings[tasks[curQuestion]])
+}
+
+const createPaintingAboutWindow = () => {
+    const div = document.createElement('div');
+    document.body.prepend(div);
+    div.classList.add('painting-about-window');
+    div.innerHTML = paintings[tasks[curQuestion]].discription
 }
 
 const fillHTML = () => {
@@ -57,12 +73,17 @@ const fillHTML = () => {
 
     // answer paintings
     const answersPaintings = document.querySelector('.answers-paintings');
+    while(answersPaintings.firstChild) {
+        answersPaintings.removeChild(answersPaintings.firstChild)
+    }
     let paintingsArr = getAnswersArr(paintings.length, tasks[curQuestion])
     fillAnswers(answersPaintings, 'painting-name', paintingsArr, paintings)
     
     //answers painters
     const answersPainters = document.querySelector('.answers-painters');
-/*     console.log(authors.findIndex(el => el.name === paintings[tasks[curQuestion]].author.name)) */
+    while(answersPainters.firstChild) {
+        answersPainters.removeChild(answersPainters.firstChild)
+    }
     let painersArr = getAnswersArr(authors.length, authors.findIndex(el => el.name === paintings[tasks[curQuestion]].author.name));
     console.log(painersArr, authors.length, authors.findIndex(el => el.name === paintings[tasks[curQuestion]].author.name))
     fillAnswers(answersPainters, 'painter-name', painersArr, authors);
@@ -82,6 +103,128 @@ const fillAuthorAbout = () => {
     }))
 }
 
+const changingAnswersVariants = () => {
+    const paintingVariant = document.querySelector('.painting-variant');
+    const painterVariant = document.querySelector('.painter-variant');
+    const answersPaintings = document.querySelector('.answers-paintings');
+    const answersPainters = document.querySelector('.answers-painters');
+    painterVariant.addEventListener('click', () => {
+        if(paintingVariant.classList.contains('variant-btn-active')){
+            paintingVariant.classList.remove('variant-btn-active');
+            painterVariant.classList.add('variant-btn-active');
+            answersPaintings.classList.add('answers-disactive');
+            answersPainters.classList.remove('answers-disactive');
+        }
+    });
+    paintingVariant.addEventListener('click', () => {
+        if(painterVariant.classList.contains('variant-btn-active')){
+            painterVariant.classList.remove('variant-btn-active');
+            paintingVariant.classList.add('variant-btn-active');
+            answersPainters.classList.add('answers-disactive');
+            answersPaintings.classList.remove('answers-disactive');
+        }
+    })
+    /* variantBtns.forEach((el, i) => {
+        el.addEventListener('click', ()=>{
+            const paintingVariant = document.querySelector('.painting-variant');
+            const painterVariant = document.querySelector('.painter-variant');
+            if(painterVariant.classList.contains('variant-btn-active')){
+                
+            }
+        })
+    }) */
+  
+}
+
+const checkingAnswers = () => {
+    const answersPaintings = document.querySelectorAll('.painting-name');
+    const answersPainters = document.querySelectorAll('.painter-name');
+
+    //checking painting
+    answersPaintings.forEach(el => {
+        el.addEventListener('click', () => {
+            console.log(el, paintings[tasks[curQuestion]].author.name)
+            if(!rightAnswers.painting){
+                if(el.innerHTML === paintings[tasks[curQuestion]].name) {
+                    rightAnswers.painting = true;
+                    el.classList.add('right-answer');
+                    curScore.all += curScore.painting;
+                    fillScore();
+                    curScore.painting = 5;
+                    openBtn();
+                    console.log('score:',curScore.all);
+                } else {
+                    el.classList.add('wrong-answer');
+                    if(curScore.painting !== 0){
+                        curScore.painting -= 1;
+                    }
+                }
+            }
+        })
+    })
+
+    // checking painters
+    answersPainters.forEach(el => {
+        el.addEventListener('click', () => {
+            console.log(answersPainters, el.innerHTML)
+            if(!rightAnswers.painter) {
+                if(el.innerHTML === paintings[tasks[curQuestion]].author.name){
+                    el.classList.add('right-answer');
+                    rightAnswers.painter = true;
+                    curScore.all += curScore.painter;
+                    fillScore();
+                    curScore.painter = 5;
+                    openBtn()
+                } else {
+                    el.classList.add('wrong-answer');
+                    if(curScore.painter !== 0){
+                        curScore.painter -= 1;
+                    }
+                }
+            }
+        })
+    })
+}
+
+const fillScore = () => {
+    const scorePoint = document.querySelector('.score-num');
+    scorePoint.innerHTML = curScore.all
+}
+
+const nextQueston = () => {
+    curQuestion += 1;
+    const curQuestionStr = document.querySelector('.question');
+    curQuestionStr.innerHTML = `${curQuestion + 1} вопрос из 10`;
+    rightAnswers.painting = false;
+    rightAnswers.painter = false;
+    fillHTML();
+    checkingAnswers();
+    const btn = document.querySelector('.next-question-btn');
+    btn.removeEventListener('click', nextQueston);
+    btn.classList.add('next-question-btn-disactive');
+}
+
+const openBtn = () => {
+    if(rightAnswers.painter && rightAnswers.painting){
+        const btn = document.querySelector('.next-question-btn');
+        btn.classList.remove('next-question-btn-disactive');
+        btn.addEventListener('click', nextQueston);
+    }
+}
+
+const startGameVar = () => {
+    tasks = getRandomArr(paintings.length, 10);
+    curQuestion = 0;
+    rightAnswers = {
+        painting: false,
+        painter: false,
+    };
+    curScore = {
+        painting: 5,
+        painter: 5,
+        all: 0,
+    }
+}
 
 
-export {a, fillHTML}
+export {a, fillHTML, createPaintingAboutWindow, changingAnswersVariants, checkingAnswers, startGameVar}

@@ -1,5 +1,7 @@
 body {
     background: rgb(201, 48, 48);
+    position: relative;
+    box-sizing: border-box;
 }
 
 // Game menu
@@ -27,15 +29,108 @@ main {
     margin-top: 20px;
     background-color: rgb(110, 231, 79);
     padding: 10px;
-    
 }
 
+
+
 .painting-img {
-    height: 100px;
-    width: 60px;
+    min-height: 200px;
+    max-height: 400px;
+    width: 300px;
+    margin: 0 auto;
+    background-size:contain;
+    background-repeat: no-repeat;
+}
+
+.painting-about-btn {
+    display: block;
+    margin: 10px auto;
+}
+
+.answer-variant {
+    display: flex;
+    justify-content: space-between;
+}
+
+.variant-btn {
+    width: 50%;
+    height: 30px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid black;
+    background-color: aqua;
+    padding-top: 5px;
+    box-sizing: border-box;
+}
+
+.variant-btn-active {
+    background-color: rgb(1, 143, 143);
+}
+
+.painting-variant {
+    border-radius: 20px 0 0 0;
+}
+
+.painter-variant {
+    border-radius: 0 20px 0 0;
+}
+
+.answers-paintings, .answers-painters {
+    height: 120px;
+}
+
+.answers-disactive {
+    display: none;
+}
+
+li::marker {
+    color: aliceblue;
+}
+
+.wrong-answer::marker {
+    color: red;
+}
+
+.right-answer::marker {
+    color: green;
+}
+
+.painting-about-window {
+    position: absolute;
+}
+
+.next-question-btn {
+    display: block;
+    margin: 0 auto;
+}
+
+.next-question-btn:hover{
+    cursor: pointer;
+}
+
+.next-question-btn-disactive {
+    background-color: grey;
+}
+
+.next-question-btn-disactive:hover{
+    background-color: grey;
+    cursor: default;
 }
 
 .painter-about-img {
     height: 100px;
     width: 60px;
+}
+
+// start menu
+
+.menu {
+    @include wrapper();
+    margin-top: 45vh;
+    background-color: green;
+}
+
+.start-btn {
+    display: block;
+    margin: 0 auto;
 }

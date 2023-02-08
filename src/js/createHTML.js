@@ -2,7 +2,7 @@ const createStartMenu = () => {
     let menu = document.createElement('div');
     document.body.append(menu);
     menu.classList.add('menu');
-    menu.insertAdjacentHTML('beforeend', `<button class = startBtn>Старт</buttonp>`)
+    menu.insertAdjacentHTML('beforeend', `<button class = start-btn>Старт</buttonp>`)
 }
 
 const createHeader = () => {
@@ -18,7 +18,15 @@ const createHeader = () => {
     let score = document.createElement('div');
     header.append(score);
     score.classList.add('score');
-    score.innerHTML = '45'
+    let scoreName = ['score-text', 'score-num']
+    for(let i = 0; i < 2; i++){
+        let div = document.createElement('div');
+        score.append(div);
+        div.classList.add(`${scoreName[i]}`);
+        if(i === 0){
+            div.innerHTML = 'Очки:'
+        }
+    }
 }
 
 const createMain = () => {
@@ -35,19 +43,35 @@ const createMain = () => {
     paintingImg.classList.add('painting-img');
     const paintingAbout = document.createElement('div');
     painting.append(paintingAbout);
-    paintingAbout.classList.add('painting-about')
+    paintingAbout.classList.add('painting-about');
+    paintingAbout.insertAdjacentHTML('beforeend', `<button class = painting-about-btn>О картине</button>`)
 
     const answersCR = document.createElement('div');
     main.append(answersCR);
     answersCR.classList.add('answers');
     const answers = document.querySelector('.answers');
 
-    const answersPaintings = document.createElement('div');
+    const answerVarCr = document.createElement('div');
+    answersCR.append(answerVarCr);
+    answerVarCr.classList.add('answer-variant');
+    const className = ['painting-variant', 'painter-variant'];
+    const nameBTN = ['Картина', 'Художник']
+    for(let i = 0; i < 2; i++) {
+        const div = document.createElement('div');
+        answerVarCr.append(div);
+        div.classList.add(`${className[i]}`, 'variant-btn');
+        div.innerHTML = nameBTN[i];
+        if(i === 0){
+            div.classList.add('variant-btn-active')
+        }
+    }
+
+    const answersPaintings = document.createElement('ul');
     answers.append(answersPaintings);
     answersPaintings.classList.add('answers-paintings');
-    const answersPainters = document.createElement('div');
+    const answersPainters = document.createElement('ul');
     answers.append(answersPainters);
-    answersPainters.classList.add('answers-painters');
+    answersPainters.classList.add('answers-painters', 'answers-disactive');
 
     const painterAboutCr = document.createElement('div');
     main.append(painterAboutCr);
@@ -60,6 +84,10 @@ const createMain = () => {
     painterAbout.append(painterAboutText);
     painterAboutText.classList.add('painter-about-text');
 
+    const nextQuestionBtn = document.createElement('button');
+    main.append(nextQuestionBtn);
+    nextQuestionBtn.classList.add('next-question-btn', 'next-question-btn-disactive');
+    nextQuestionBtn.innerHTML = 'Следующий вопрос'
 }
 
 const createGameMenu = () => {
