@@ -76,7 +76,7 @@ const createPaintingAboutWindow = () => {
 
 const fillHTML = () => {
     const paintingImg = document.querySelector('.painting-img');
-    paintingImg.style.backgroundImage = `url(${paintings[tasks[curQuestion]].image})`;
+    paintingImg.style.backgroundImage = `url(${'../src/images'+paintings[tasks[curQuestion]].image})`;
 
     // answer paintings
     const answersPaintings = document.querySelector('.answers-paintings');

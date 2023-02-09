@@ -12,6 +12,6 @@ changingAnswersVariants();
 checkingAnswers() */
 
 createStartMenu()
-console.log(document.body.firstChild)
-/* const startBtn = document.querySelector('.start-btn');
-startBtn.addEventListener('click', createFinishMenu) */
+/* console.log(document.body.firstChild)
+const startBtn = document.querySelector('.start-btn');
+startBtn.addEventListener('click', startGame) */
