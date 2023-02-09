@@ -1,5 +1,12 @@
 import {paintings} from './paintings'
 import { authors } from './authors';
+import { finishGame } from './start-finish';
+
+const clearBody = () => {
+    while(document.body.firstChild) {
+        document.body.removeChild(document.body.firstChild)
+    }
+}
 
 const getRandomArr = (range, count) => {
 
@@ -208,6 +215,10 @@ const openBtn = () => {
     if(rightAnswers.painter && rightAnswers.painting){
         const btn = document.querySelector('.next-question-btn');
         btn.classList.remove('next-question-btn-disactive');
+        if(curQuestion === 9) {
+            btn.innerHTML = 'Показать результаты';
+            btn.addEventListener('click', finishGame);
+        }
         btn.addEventListener('click', nextQueston);
     }
 }
@@ -227,4 +238,4 @@ const startGameVar = () => {
 }
 
 
-export {a, fillHTML, createPaintingAboutWindow, changingAnswersVariants, checkingAnswers, startGameVar}
+export {a, clearBody, fillHTML, createPaintingAboutWindow, changingAnswersVariants, checkingAnswers, startGameVar, curScore}

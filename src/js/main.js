@@ -1,6 +1,6 @@
 import "../styles.scss"
-import startGame from "./start"
-import { createStartMenu, createGameMenu } from "./createHTML"
+import startGame from "./start-finish"
+import { createStartMenu, createGameMenu, createFinishMenu } from "./createHTML"
 import {a, fillHTML, checkingAnswers, createPaintingAboutWindow, changingAnswersVariants} from "./gameplay-and-task"
 /* createGameMenu()
 a()
@@ -13,5 +13,5 @@ checkingAnswers() */
 
 createStartMenu()
 console.log(document.body.firstChild)
-const startBtn = document.querySelector('.start-btn');
-startBtn.addEventListener('click', startGame)
+/* const startBtn = document.querySelector('.start-btn');
+startBtn.addEventListener('click', createFinishMenu) */

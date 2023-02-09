@@ -1,8 +1,12 @@
+import { curScore, clearBody } from "./gameplay-and-task";
+import {startGame, finishGame} from "./start-finish"
+
 const createStartMenu = () => {
     let menu = document.createElement('div');
     document.body.append(menu);
     menu.classList.add('menu');
-    menu.insertAdjacentHTML('beforeend', `<button class = start-btn>Старт</buttonp>`)
+    menu.insertAdjacentHTML('beforeend', `<button class = start-btn>Старт</buttonp>`);
+    menu.firstChild.addEventListener('click', startGame);
 }
 
 const createHeader = () => {
@@ -95,6 +99,29 @@ const createGameMenu = () => {
     createMain()
 }
 
+const createFinishMenu = () => {
+    const div = document.createElement('div');
+    document.body.append(div);
+    div.classList.add('finish');
 
+    const finishText = document.createElement('div');
+    div.append(finishText);
+    finishText.classList.add('finish-text');
+    let fraze = `Поздравляем, вы прошли викторину и получили ${curScore.all} баллов! `
+    if(curScore.all > 90){
+        finishText.innerHTML = fraze + `Вы отлично знакомы с произведениями искусства! Поробуете повторить свой результат? :)`
+    } else if (curScore.all > 30) {
+        finishText.innerHTML =  fraze + `Вы неплохо знакомы с произведениями искусства! Поробуете улучшить свой результат? :)`
+    } else {
+        finishText.innerHTML =  fraze + `Вы - неуч! Но не отчаивайтесь, у Вас все получится!`
+    }
+    
+    div.insertAdjacentHTML('beforeend', `<button class = finish-btn>Вернуться в меню</buttonp>`);
+    const finishBtn = document.querySelector('.finish-btn');
+    finishBtn.addEventListener('click', () => {
+        clearBody();
+        createStartMenu()
+    })
+}
 
-export {createStartMenu, createGameMenu}
+export {createStartMenu, createGameMenu, createFinishMenu}
