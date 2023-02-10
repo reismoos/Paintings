@@ -48,6 +48,7 @@ const createMain = () => {
     const paintingAbout = document.createElement('div');
     painting.append(paintingAbout);
     paintingAbout.classList.add('painting-about');
+    paintingAbout.insertAdjacentHTML('beforeend', `<div class = painting-about-window></div>`)
     paintingAbout.insertAdjacentHTML('beforeend', `<button class = painting-about-btn>О картине</button>`)
 
     const answersCR = document.createElement('div');

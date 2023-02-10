@@ -63,20 +63,11 @@ let curScore = {
     all: 0,
 }
 
-const a = () => {
-    console.log('tasks =', tasks, 'painting =',paintings[tasks[curQuestion]])
-}
-
-const createPaintingAboutWindow = () => {
-    const div = document.createElement('div');
-    document.body.prepend(div);
-    div.classList.add('painting-about-window');
-    div.innerHTML = paintings[tasks[curQuestion]].discription
-}
-
 const fillHTML = () => {
     const paintingImg = document.querySelector('.painting-img');
-    paintingImg.style.backgroundImage = `url(${'../src/images'+paintings[tasks[curQuestion]].image})`;
+    paintingImg.style.backgroundImage = `url(${paintings[tasks[curQuestion]].image.slice(1)})`;
+    /* paintingImg.style.backgroundImage = `url(${paintings[tasks[curQuestion]].image})`; */
+    
 
     // answer paintings
     const answersPaintings = document.querySelector('.answers-paintings');
@@ -94,19 +85,31 @@ const fillHTML = () => {
     let painersArr = getAnswersArr(authors.length, authors.findIndex(el => el.name === paintings[tasks[curQuestion]].author.name));
     console.log(painersArr, authors.length, authors.findIndex(el => el.name === paintings[tasks[curQuestion]].author.name))
     fillAnswers(answersPainters, 'painter-name', painersArr, authors);
-
+    answersPainters.insertAdjacentHTML('beforeend', `<button class = painter-about-btn>О художнике</button>`)
+    fillAuthorAbout();
+    const popupPainterbtn = document.querySelector('.painter-about-btn');
+    popupPainterbtn.addEventListener('click', openPopupPainter)
 }
+
+const openPopupPainter = () => {
+    const popupPainter = document.querySelector('.painter-about');
+    popupPainter.classList.add('painter-about-active');
+    document.addEventListener('click', (a) => { 
+        if(a.target !== popup) { 
+            popupPainter.classList.remove('painter-about-active'); 
+        }
+})}
 
 const fillAuthorAbout = () => {
     const authorid = document.querySelectorAll('.painter-name');
     console.log(authorid[0])
     authorid.forEach(el => el.addEventListener('click', () => {
         console.log(el.id)
-    const painterPhoto = document.querySelector('.painter-about-img');
-    const painterAboutText = document.querySelector('.painter-about-text');
+        const painterPhoto = document.querySelector('.painter-about-img');
+        const painterAboutText = document.querySelector('.painter-about-text');
 
-    painterPhoto.style.backgroundImage = `url(${authors[el.id].image})`;
-    painterAboutText.innerHTML = `${authors[el.id].about}`
+        painterPhoto.style.backgroundImage = `url(${authors[el.id].image})`;
+        painterAboutText.innerHTML = `${authors[el.id].about}`
     }))
 }
 
@@ -207,14 +210,26 @@ const nextQueston = () => {
     fillHTML();
     checkingAnswers();
     const btn = document.querySelector('.next-question-btn');
+    const btnPainting = document.querySelector('.painting-about-btn');
+    btnPainting.classList.remove('painting-about-btn-active');
+    btnPainting.removeEventListener('click', showPopupPainting)
     btn.removeEventListener('click', nextQueston);
     btn.classList.add('next-question-btn-disactive');
+
+/*     const painterAbout = document.querySelector('.painter-about');
+    while (painterAbout.firstChild) {
+        painterAbout.removeChild(painterAbout.firstChild)
+    } */
+    
 }
 
 const openBtn = () => {
     if(rightAnswers.painter && rightAnswers.painting){
         const btn = document.querySelector('.next-question-btn');
         btn.classList.remove('next-question-btn-disactive');
+        const btnPainting = document.querySelector('.painting-about-btn');
+        btnPainting.classList.add('painting-about-btn-active')
+        btnPainting.addEventListener('click', showPopupPainting);
         if(curQuestion === 9) {
             btn.innerHTML = 'Показать результаты';
             btn.addEventListener('click', finishGame);
@@ -237,5 +252,16 @@ const startGameVar = () => {
     }
 }
 
+const showPopupPainting = () => {
+    const popup = document.querySelector('.painting-about-window');
+    popup.innerHTML = paintings[tasks[curQuestion]].discription;
+    popup.classList.add('painting-popup-active');
+    document.addEventListener('click', (a) => { 
+        if(a.target === popup) { 
+            popup.classList.remove('painting-popup-active'); ;
+        }
+    
+});
 
-export {a, clearBody, fillHTML, createPaintingAboutWindow, changingAnswersVariants, checkingAnswers, startGameVar, curScore}
+}
+export { clearBody, fillHTML, changingAnswersVariants, checkingAnswers, startGameVar, curScore}
