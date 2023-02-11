@@ -94,10 +94,9 @@ const fillHTML = () => {
 const openPopupPainter = () => {
     const popupPainter = document.querySelector('.painter-about');
     popupPainter.classList.add('painter-about-active');
-    document.addEventListener('click', (a) => { 
-        if(a.target !== popup) { 
-            popupPainter.classList.remove('painter-about-active'); 
-        }
+    popupPainter.addEventListener('click', () => { 
+    popupPainter.classList.remove('painter-about-active'); 
+        
 })}
 
 const fillAuthorAbout = () => {
